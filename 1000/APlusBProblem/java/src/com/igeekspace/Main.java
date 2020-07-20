@@ -6,26 +6,30 @@ public class Main {
     static StreamTokenizer in;
     static PrintWriter out;
 
-    private static int nextInt() throws IOException {
-        in.nextToken();
-        return (int) in.nval;
+    private static double nextNumber() throws IOException {
+        if (in.nextToken() == StreamTokenizer.TT_EOF) {
+            throw new IOException("EOF");
+        }
+        return in.nval;
     }
 
-    private static void solve() throws IOException {
-        int a = nextInt();
-        int b = nextInt();
+    private static void solve() {
+        while (true) {
+            try {
+                int a = (int) nextNumber();
+                int b = (int) nextNumber();
 
-        out.println(a + b);
+                out.println(a + b);
+            } catch (IOException ioException) {
+                break;
+            }
+        }
     }
 
     public static void main(String[] args) {
-        try {
-            in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
-            out = new PrintWriter(new OutputStreamWriter(System.out));
-            solve();
-            out.flush();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
+        in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
+        out = new PrintWriter(new OutputStreamWriter(System.out));
+        solve();
+        out.flush();
     }
 }
