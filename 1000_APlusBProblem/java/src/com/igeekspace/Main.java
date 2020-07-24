@@ -3,33 +3,37 @@ package com.igeekspace;
 import java.io.*;
 
 public class Main {
-    static StreamTokenizer in;
-    static PrintWriter out;
+    static BufferedReader bufferedReader;
+    static PrintWriter printWriter;
 
-    private static double nextNumber() throws IOException {
-        if (in.nextToken() == StreamTokenizer.TT_EOF) {
-            throw new IOException("EOF");
-        }
-        return in.nval;
-    }
-
-    private static void solve() {
+    private static void solve() throws IOException {
         while (true) {
-            try {
-                int a = (int) nextNumber();
-                int b = (int) nextNumber();
+            String input = bufferedReader.readLine();
 
-                out.println(a + b);
-            } catch (IOException ioException) {
+            if (input == null) {
                 break;
             }
+            String[] nums = input.split(" ");
+
+            if(nums.length != 2){
+                break;
+            }
+            int a = Integer.parseInt(nums[0]);
+            int b = Integer.parseInt(nums[1]);
+
+            printWriter.println(a + b);
         }
     }
 
     public static void main(String[] args) {
-        in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
-        out = new PrintWriter(new OutputStreamWriter(System.out));
-        solve();
-        out.flush();
+        bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        printWriter = new PrintWriter(new OutputStreamWriter(System.out));
+
+        try {
+            solve();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+        printWriter.flush();
     }
 }
