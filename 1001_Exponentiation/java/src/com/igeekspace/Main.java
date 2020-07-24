@@ -6,41 +6,35 @@ import java.math.BigDecimal;
 public class Main {
     private static final boolean debug = false;
 
-    static StreamTokenizer in;
-    static PrintWriter out;
+    static BufferedReader bufferedReader;
+    static PrintWriter printWriter;
 
-    private static double nextNumber() throws IOException {
-        if (in.nextToken() == StreamTokenizer.TT_EOF) {
-            throw new IOException("EOF");
-        }
-        return in.nval;
-    }
-
-    private static void solve() {
+    private static void solve() throws IOException {
         while (true) {
-            try {
-                double r = nextNumber();
-                int n = (int) nextNumber();
+            String input = bufferedReader.readLine();
 
-                BigDecimal bigDecimal = new BigDecimal(Double.toString(r));
-
-                if (debug) {
-                    out.println("r is " + r + "; n is " + n);
-                    out.println("answer is :" + bigDecimal.pow(n));
-                }
-
-                String answer = bigDecimal.pow(n).stripTrailingZeros().toPlainString();
-                out.println(answer.startsWith("0") ? answer.substring(1) : answer);
-            } catch (IOException ioException) {
+            if (input == null) {
                 break;
             }
+            double r = Double.parseDouble(input.substring(0, 6).trim());
+            int n = Integer.parseInt(input.substring(7).trim());
+
+            BigDecimal bigDecimal = new BigDecimal(Double.toString(r));
+
+            if (debug) {
+                printWriter.println("r is " + r + "; n is " + n);
+                printWriter.println("answer is :" + bigDecimal.pow(n));
+            }
+
+            String answer = bigDecimal.pow(n).stripTrailingZeros().toPlainString();
+            printWriter.println(answer.startsWith("0") ? answer.substring(1) : answer);
         }
     }
 
-    public static void main(String[] args) {
-        in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
-        out = new PrintWriter(new OutputStreamWriter(System.out));
+    public static void main(String[] args) throws IOException {
+        bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        printWriter = new PrintWriter(new OutputStreamWriter(System.out));
         solve();
-        out.flush();
+        printWriter.flush();
     }
 }
